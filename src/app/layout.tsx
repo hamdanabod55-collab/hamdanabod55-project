@@ -1,36 +1,30 @@
-import type { Metadata } from "next";
-import { Cairo, Tajawal } from "next/font/google";
-import React from "react";
-import "./globals.css";
-import SearchModal from '@/components/SearchModal';
-import CartSidebar from '@/components/CartSidebar';
-import Footer from '@/components/Footer';
-import FloatingWhatsApp from '@/components/FloatingWhatsApp';
-
-const cairo = Cairo({ subsets: ['arabic'], variable: '--font-cairo' });
-const tajawal = Tajawal({ weight: ['400', '500', '700'], subsets: ["arabic"], variable: "--font-tajawal" });
+import type { Metadata } from 'next';
+import './globals.css';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
+import { CartProvider } from '@/context/CartContext';
 
 export const metadata: Metadata = {
-    title: "أوليفر ستور",
-    description: "متجر إلكتروني عصري، بتصاميم راقية",
+  title: 'LUMIÈRE | Premium Clothing Store',
+  description: 'Discover your style today with our premium clothing collection.',
 };
 
 export default function RootLayout({
-    children,
-}: {
-    children: React.ReactNode;
-}) {
-    return (
-        <html lang="ar" dir="rtl">
-            <body className={`${cairo.variable} ${tajawal.variable}`} dir="rtl" style={{ background: 'var(--color-beige-dark)', color: 'var(--color-milk)', minHeight: '100vh', position: 'relative' }}>
-        <SearchModal />
-        <CartSidebar />
-        <FloatingWhatsApp />
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en">
+      <body className="min-h-screen flex flex-col">
+        <CartProvider>
+          <Navbar />
+          <main className="flex-grow">
             {children}
-        </div>
-        <Footer />
+          </main>
+          <Footer />
+        </CartProvider>
       </body>
-        </html>
-    );
+    </html>
+  );
 }
